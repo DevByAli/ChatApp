@@ -1,0 +1,135 @@
+<%- include('layouts/header.ejs') %>
+<h2 class="mb-4">Hi, <%= user.name %></h2>
+
+<div class="row">
+  <div class="col-md-4">
+    <ul class="list-group mb-5">
+      <% if(users.length > 0) { for(let i = 0; i < users.length; ++i) { %>
+      <li
+        class="list-group-item list-group-item-dark cursor-pointer user-list"
+        data-id="<%= users[i]['_id'] %>"
+      >
+        <img
+          src="http://localhost:50001/<%= users[i].image %>"
+          alt=""
+          width="40px"
+          height="40px"
+          style="border-radius: 100%"
+        />
+        <%= users[i].name %> <% if(users[i].is_online === '1') { %>
+        <sup class="online-status" id="<%= users[i]['_id'] %>-status"
+          >Online</sup
+        >
+        <% } else { %>
+        <sup class="offline-status" id="<%= users[i]['_id'] %>-status"
+          >Offline</sup
+        >
+        <% } %>
+      </li>
+      <% } %> <% } %>
+    </ul>
+  </div>
+
+  <div class="col-md-8">
+    <h3 class="start-head">Click to start chat</h3>
+    <div class="chat-section" style="display: none">
+      <div id="chat-container"></div>
+      <form action="" id="chat-form">
+        <input
+          type="text"
+          name="message"
+          placeholder="Enter Message"
+          id="message"
+          class="border"
+          required
+        />
+        <input type="submit" value="Send Message" class="btn btn-primary" />
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div
+  class="modal fade"
+  id="deleteChatModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Chat</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" id="delete-chat-form">
+        <div class="modal-body">
+          <input type="hidden" name="id" id="delete-message-id" />
+          <p>Are you sure to delete this message?</p>
+          <p><b id="delete-message"></b></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            No
+          </button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div
+  class="modal fade"
+  id="editChatModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Chat</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" id="update-chat-form">
+        <div class="modal-body">
+          <input type="hidden" name="id" id="edit-message-id" />
+          <input
+            type="text"
+            name="message"
+            id="update-message"
+            placeholder="Enter message"
+            required
+          />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            No
+          </button>
+          <button type="submit" class="btn btn-success">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('layouts/footer.ejs') %>

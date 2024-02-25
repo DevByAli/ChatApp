@@ -1,0 +1,2 @@
+multer pkg -> is used to take the image of the user
+express-session -> used to shoe the user online offline

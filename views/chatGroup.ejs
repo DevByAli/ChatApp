@@ -1,0 +1,146 @@
+<%- include('layouts/header.ejs') %>
+<h2 class="mb-4">Group Chatting</h2>
+
+<div class="row">
+  <div class="col-md-4">
+    <ul class="list-group mb-5">
+      <% if(myGroups.length > 0) { for(let i = 0; i < myGroups.length; ++i) { %>
+      <li
+        class="list-group-item list-group-item-dark cursor-pointer group-list"
+        data-id="<%= myGroups[i]._id %>"
+        data-name="<%=myGroups[i]['name']%>"
+      >
+        <img
+          src="http://localhost:50001/<%= myGroups[i].image %>"
+          alt=""
+          width="40px"
+          height="40px"
+          style="border-radius: 100%"
+        />
+        <%=myGroups[i].name%>
+      </li>
+      <% }} %>
+      <!-- SHow joined group -->
+      <% if(myJoinedGroups.length > 0) { for(let i = 0; i <
+      myJoinedGroups.length; ++i) { %>
+      <li
+        class="list-group-item list-group-item-dark cursor-pointer group-list"
+        data-id="<%= myJoinedGroups[i]['groupID']['_id']%>"
+        data-name="<%=myJoinedGroups[i]['groupID']['name']%>"
+      >
+        <img
+          src="http://localhost:50001/<%= myJoinedGroups[i]['groupID']['image'] %>"
+          alt=""
+          width="40px"
+          height="40px"
+          style="border-radius: 100%"
+        />
+        <%=myJoinedGroups[i]['groupID']['name']%>
+      </li>
+      <% }} %>
+    </ul>
+  </div>
+
+  <div class="col-md-8">
+    <h3 class="group-start-head">Click to start chat</h3>
+    <div class="group-chat-section">
+      <h3 id="group-name"></h3>
+      <div id="group-chat-container"></div>
+      <form action="" id="group-chat-form">
+        <input
+          type="text"
+          name="message"
+          placeholder="Enter Message"
+          id="group-message"
+          class="border"
+          required
+        />
+        <input type="submit" value="Send Message" class="btn btn-primary" />
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteGroupChatModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Chat</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" id="delete-group-chat-form">
+        <div class="modal-body">
+          <input type="hidden" name="id" id="delete-group-message-id" />
+          <p>Are you sure to delete this message?</p>
+          <p><b id="delete-group-message"></b></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            No
+          </button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="editGroupChatModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Chat</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" id="update-group-chat-form">
+        <div class="modal-body">
+          <input type="hidden" name="id" id="edit-group-message-id" />
+          <input
+            type="text"
+            name="message"
+            class="form-control w-100"
+            id="update-group-message"
+            placeholder="Enter message"
+            required
+          />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            No
+          </button>
+          <button type="submit" class="btn btn-success">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('layouts/footer.ejs') %>
